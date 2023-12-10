@@ -6,7 +6,6 @@ import java.util.List;
 
 @Entity
 public class JiraIssue {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,5 +30,5 @@ public class JiraIssue {
     private String epicLink;
     private Integer storyPoints;
 
-    // Constructors, Getters, Setters
+    // Constructors, Getters, Setters...
 }

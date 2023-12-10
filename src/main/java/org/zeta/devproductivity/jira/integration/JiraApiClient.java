@@ -1,22 +1,27 @@
 package org.zeta.devproductivity.jira.integration;
 
-import org.zeta.devproductivity.jira.model.JiraIssue;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import org.zeta.devproductivity.jira.model.JiraIssue;
+import java.util.Arrays;
 import java.util.List;
 
-@Component
+@Service
 public class JiraApiClient {
 
     private final RestTemplate restTemplate;
-    private final String jiraApiUrl = "https://imrn.dev/api/dummy";
+    private final String jiraApiUrl;
 
-    public JiraApiClient(RestTemplate restTemplate) {
+    public JiraApiClient(RestTemplate restTemplate, @Value("${jira.api.url}") String jiraApiUrl) {
         this.restTemplate = restTemplate;
+        this.jiraApiUrl = jiraApiUrl;
     }
 
     public List<JiraIssue> fetchJiraIssues() {
-        // Implement the logic to call the Jira API and convert the response to List<JiraIssue>
+        JiraIssue[] issues = restTemplate.getForObject(jiraApiUrl, JiraIssue[].class);
+        return issues != null ? Arrays.asList(issues) : List.of();
     }
+
+    // Additional methods to interact with the Jira API
 }

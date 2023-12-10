@@ -3,25 +3,24 @@ package org.zeta.devproductivity.jira.controller;
 import org.zeta.devproductivity.jira.model.JiraIssue;
 import org.zeta.devproductivity.jira.service.JiraService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/jira")
 public class JiraController {
+    private final JiraService jiraService;
 
-    private final JiraService service;
-
-    public JiraController(JiraService service) {
-        this.service = service;
+    public JiraController(JiraService jiraService) {
+        this.jiraService = jiraService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<JiraIssue>> getAllIssues() {
-        return ResponseEntity.ok(service.getAllIssues());
+    @GetMapping("/issues/{email}")
+    public ResponseEntity<List<JiraIssue>> getIssuesByAssigneeEmail(@PathVariable String email) {
+        List<JiraIssue> issues = jiraService.getIssuesByAssigneeEmail(email);
+        return ResponseEntity.ok(issues);
     }
 
-    // Additional endpoints as needed
+    // Additional endpoints as needed...
 }

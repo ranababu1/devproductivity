@@ -7,19 +7,15 @@ import java.util.List;
 
 @Service
 public class JiraService {
+    private final JiraIssueRepository jiraIssueRepository;
 
-    private final JiraIssueRepository repository;
-
-    public JiraService(JiraIssueRepository repository) {
-        this.repository = repository;
+    public JiraService(JiraIssueRepository jiraIssueRepository) {
+        this.jiraIssueRepository = jiraIssueRepository;
     }
 
     public List<JiraIssue> getIssuesByAssigneeEmail(String email) {
-        return repository.findByAssigneeEmail(email);
+        return jiraIssueRepository.findByAssigneeEmail(email);
     }
 
-    // Method to save fetched Jira issues
-    public void saveIssues(List<JiraIssue> issues) {
-        repository.saveAll(issues);
-    }
+    // Add other service methods as needed...
 }
